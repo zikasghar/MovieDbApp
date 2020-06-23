@@ -7,4 +7,22 @@
         android:title="@string/search_hint"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/order_by_name_A_Z"
+        android:title="@string/order_by_name_A_Z" />
+    <item
+        android:id="@+id/order_by_name_Z_A"
+        android:title="@string/order_by_name_Z_A" />
+    <item
+        android:id="@+id/order_by_rating_L_H"
+        android:title="@string/order_by_rating_L_H" />
+    <item
+        android:id="@+id/order_by_rating_H_L"
+        android:title="@string/order_by_rating_H_L" />
+    <item
+        android:id="@+id/order_by_year_N_O"
+        android:title="@string/order_by_year_N_O" />
+    <item
+        android:id="@+id/order_by_year_O_N"
+        android:title="@string/order_by_year_O_N" />
 </menu>

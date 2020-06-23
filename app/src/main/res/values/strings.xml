@@ -3,5 +3,11 @@
     <string name="title_activity_movies_main">MoviesMain</string>
     <string name="title_activity_movie_view">movieView</string>
     <string name="search_hint">Search Database.....</string>
+    <string name="order_by_name_A_Z">Order by Name (A-Z)</string>
+    <string name="order_by_name_Z_A">Order by Name (Z-A)</string>
+    <string name="order_by_rating_L_H">Order by Rating(Lowest first)</string>
+    <string name="order_by_rating_H_L">Order by Rating(Highest first)</string>
+    <string name="order_by_year_N_O">Order by Year(Latest first)</string>
+    <string name="order_by_year_O_N">Order by Year(Oldest first)</string>
 
 </resources>

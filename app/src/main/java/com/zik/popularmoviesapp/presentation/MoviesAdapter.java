@@ -1,6 +1,7 @@
 package com.zik.popularmoviesapp.presentation;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -14,8 +15,12 @@ import com.bumptech.glide.Glide;
 import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.model.PopularMovie;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder> implements Filterable {
     private List<PopularMovie> movies;
@@ -69,6 +74,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
 
     public void setAdapterList(List<PopularMovie> movieList) {
         movies = movieList;
+        filteredMovies = movies;
         notifyDataSetChanged();
     }
 
@@ -83,9 +89,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 } else {
                     List<PopularMovie> filteredList = new ArrayList<>();
                     for (PopularMovie row : movies) {
-
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
                         if (row.getTitle().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
@@ -105,4 +108,77 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
             }
         };
     }
+
+    public void sort(final MenuItem item) {
+        final Collator collator = Collator.getInstance(Locale.UK);
+        if (!filteredMovies.isEmpty()) {
+            Collections.sort(filteredMovies, new Comparator<PopularMovie>() {
+                @Override
+                public int compare(PopularMovie movie1, PopularMovie movie2) {
+                    switch (item.getItemId()) {
+                        case R.id.order_by_name_A_Z:
+                        case R.id.order_by_name_Z_A:
+                            return collator.compare(movie1.getTitle(), movie2.getTitle());
+                        case R.id.order_by_rating_L_H:
+                        case R.id.order_by_rating_H_L:
+                            return collator.compare(String.valueOf(movie1.getVoteAverage()),
+                                    String.valueOf(movie2.getVoteAverage()));
+                        case R.id.order_by_year_O_N:
+                        case R.id.order_by_year_N_O:
+                            return collator.compare(movie1.getRelease(), movie2.getRelease());
+                    }
+                    return 0;
+                }
+            });
+            if (item.getItemId() == R.id.order_by_name_Z_A ||
+                    item.getItemId() == R.id.order_by_rating_H_L ||
+                    item.getItemId() == R.id.order_by_year_N_O) {
+                Collections.reverse(filteredMovies);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+/*    public void sortByName(){
+        final Collator collator = Collator.getInstance(Locale.UK);
+        if (!filteredMovies.isEmpty()) {
+            Collections.sort(filteredMovies, new Comparator<PopularMovie>() {
+                @Override
+                public int compare(PopularMovie movie1, PopularMovie movie2) {
+                    return collator.compare(movie1.getTitle(), movie2.getTitle());
+                }
+            });
+        }
+        notifyDataSetChanged();
+    }
+
+    public void sortByRating(){
+        final Collator collator = Collator.getInstance(Locale.UK);
+        if (!filteredMovies.isEmpty()) {
+            Collections.sort(filteredMovies, new Comparator<PopularMovie>() {
+                @Override
+                public int compare(PopularMovie movie1, PopularMovie movie2) {
+                    return collator.compare(String.valueOf(movie1.getVoteAverage()), String.valueOf(movie2.getVoteAverage()));
+                }
+            });
+        }
+        notifyDataSetChanged();
+
+    }
+
+    public void sortByYear(){
+        final Collator collator = Collator.getInstance(Locale.UK);
+        if (!filteredMovies.isEmpty()) {
+            Collections.sort(filteredMovies, new Comparator<PopularMovie>() {
+                @Override
+                public int compare(PopularMovie movie1, PopularMovie movie2) {
+                    return collator.compare(movie1.getRelease(), movie2.getRelease());
+                }
+            });
+        }
+        notifyDataSetChanged();
+    }
+
+ */
+
 }

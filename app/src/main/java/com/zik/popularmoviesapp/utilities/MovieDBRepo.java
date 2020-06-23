@@ -18,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static com.zik.popularmoviesapp.constants.Constants.BASE_URL;
 import static com.zik.popularmoviesapp.constants.Constants.JSON_AVERAGE_VOTE_STRING;
 import static com.zik.popularmoviesapp.constants.Constants.JSON_OVERVIEW_STRING;
+import static com.zik.popularmoviesapp.constants.Constants.JSON_POSTER_PATH_END;
 import static com.zik.popularmoviesapp.constants.Constants.JSON_POSTER_PATH_STRING;
 import static com.zik.popularmoviesapp.constants.Constants.JSON_RELEASE_DATE_LENGTH;
 import static com.zik.popularmoviesapp.constants.Constants.JSON_RELEASE_STRING;
@@ -58,20 +59,14 @@ public class MovieDBRepo {
                                         movie.substring(titleIndexStart, titleIndexEnd));
                                 //GET POSTERPATH FROM JSON STRING
                                 int posterPathIndexStart = movie.indexOf(JSON_POSTER_PATH_STRING) + JSON_POSTER_PATH_STRING.length();
-                                int posterPathIndexEnd = movie.indexOf(",", posterPathIndexStart);
-                                if (posterPathIndexStart != posterPathIndexEnd) {
-                                    popularMovie.setPosterPath(POSTER_URL +
-                                            movie.substring(posterPathIndexStart, posterPathIndexEnd));
-                                }
+                                int posterPathIndexEnd = movie.indexOf(JSON_POSTER_PATH_END, posterPathIndexStart);
+                                popularMovie.setPosterPath(POSTER_URL +
+                                        movie.substring(posterPathIndexStart, posterPathIndexEnd + 4));
                                 //GET VOTE AVERAGE FROM JSON STRING
-                                Log.d("VOTE", "1");
                                 int voteIndexStart = movie.indexOf(JSON_AVERAGE_VOTE_STRING) + JSON_AVERAGE_VOTE_STRING.length();
-                                Log.d("VOTE", "2");
                                 int voteIndexEnd = movie.indexOf(",", voteIndexStart);
-                                Log.d("VOTE", "3");
                                 popularMovie.setVoteAverage(
                                         Float.parseFloat(movie.substring(voteIndexStart, voteIndexEnd)));
-                                Log.d("VOTE", String.valueOf(popularMovie.getVoteAverage()));
                                 //GET OVERVIEW FROM JSON STRING
                                 int overviewIndexStart = movie.indexOf(JSON_OVERVIEW_STRING) + JSON_OVERVIEW_STRING.length();
                                 int overviewIndexEnd = movie.indexOf(".,", overviewIndexStart);

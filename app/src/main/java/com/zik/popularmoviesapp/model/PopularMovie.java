@@ -100,4 +100,5 @@ public class PopularMovie implements Parcelable {
         dest.writeFloat(voteAverage);
         dest.writeString(posterPath);
     }
+
 }
