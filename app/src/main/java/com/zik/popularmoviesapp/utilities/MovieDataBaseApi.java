@@ -15,7 +15,7 @@ public interface MovieDataBaseApi {
     @GET("movie/popular?api_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     Call<JsonObject> getMoviesByPopular(@Query("page") String page);
 
-    @GET("movie/top_rated?api_key=39ed02b340235a03c4238222e370adbd")
+    @GET("movie/top_rated?api_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     Call<JsonObject> getMoviesByRated(@Query("page") String page);
 
 }
