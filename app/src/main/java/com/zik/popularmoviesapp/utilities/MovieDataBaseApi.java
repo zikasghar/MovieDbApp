@@ -6,6 +6,6 @@ import retrofit2.http.Query;
 
 public interface MovieDataBaseApi {
 
-    @GET("movie/popular?api_key=39ed02b340235a03c4238222e370adbd")
+    @GET("movie/popular?api_key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     Call<Object> getMovies(@Query("page") String page);
 }
