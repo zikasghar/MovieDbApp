@@ -9,6 +9,10 @@ import com.zik.popularmoviesapp.utilities.MovieDBRepo;
 
 import java.util.List;
 
+/**
+ * Created by Zik Asghar 06/2020
+ */
+
 public class MoviesMainViewModel extends ViewModel {
     public MutableLiveData<List<PopularMovie>> movies = new MutableLiveData<>();
     private MovieDBRepo repo = new MovieDBRepo();

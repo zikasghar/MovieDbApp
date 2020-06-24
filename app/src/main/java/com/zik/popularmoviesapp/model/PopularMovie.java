@@ -3,35 +3,45 @@ package com.zik.popularmoviesapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Created by Zik Asghar 06/2020
+ */
+
 public class PopularMovie implements Parcelable {
     private String title;
     private String overview;
+    @SerializedName("release_date")
     private String release;
-    private float voteAverage;
+    @SerializedName("poster_path")
     private String posterPath;
+    @SerializedName("vote_average")
+    private float voteAverage;
+    private float popularity;
 
-
-    public PopularMovie() {
-    }
 
     public PopularMovie(String title,
                         String overview,
                         String release,
+                        String posterPath,
                         float voteAverage,
-                        String posterPath) {
+                        float popularity) {
         this.title = title;
         this.overview = overview;
         this.release = release;
-        this.voteAverage = voteAverage;
         this.posterPath = posterPath;
+        this.voteAverage = voteAverage;
+        this.popularity = popularity;
     }
 
     protected PopularMovie(Parcel in) {
         title = in.readString();
         overview = in.readString();
         release = in.readString();
-        voteAverage = in.readFloat();
         posterPath = in.readString();
+        voteAverage = in.readFloat();
+        popularity = in.readFloat();
     }
 
     public static final Creator<PopularMovie> CREATOR = new Creator<PopularMovie>() {
@@ -70,6 +80,14 @@ public class PopularMovie implements Parcelable {
         this.release = release;
     }
 
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
     public float getVoteAverage() {
         return voteAverage;
     }
@@ -78,14 +96,14 @@ public class PopularMovie implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
-
-    public String getPosterPath() {
-        return posterPath;
+    public float getPopularity() {
+        return popularity;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public void setPopularity(float popularity) {
+        this.popularity = popularity;
     }
+
 
     @Override
     public int describeContents() {
@@ -97,8 +115,9 @@ public class PopularMovie implements Parcelable {
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(release);
-        dest.writeFloat(voteAverage);
         dest.writeString(posterPath);
+        dest.writeFloat(voteAverage);
+        dest.writeFloat(popularity);
     }
 
 }

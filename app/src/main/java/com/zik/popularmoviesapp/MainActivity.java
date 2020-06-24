@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.zik.popularmoviesapp.presentation.MoviesMain;
 
+/**
+ * Created by Zik Asghar 06/2020
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

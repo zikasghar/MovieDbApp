@@ -2,8 +2,12 @@ package com.zik.popularmoviesapp.utilities;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.zik.popularmoviesapp.model.PopularMovie;
 
 import java.util.ArrayList;
@@ -16,70 +20,40 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.zik.popularmoviesapp.constants.Constants.BASE_URL;
-import static com.zik.popularmoviesapp.constants.Constants.JSON_AVERAGE_VOTE_STRING;
-import static com.zik.popularmoviesapp.constants.Constants.JSON_OVERVIEW_STRING;
-import static com.zik.popularmoviesapp.constants.Constants.JSON_POSTER_PATH_END;
-import static com.zik.popularmoviesapp.constants.Constants.JSON_POSTER_PATH_STRING;
-import static com.zik.popularmoviesapp.constants.Constants.JSON_RELEASE_DATE_LENGTH;
-import static com.zik.popularmoviesapp.constants.Constants.JSON_RELEASE_STRING;
-import static com.zik.popularmoviesapp.constants.Constants.JSON_TITLE_STRING;
 import static com.zik.popularmoviesapp.constants.Constants.POSTER_URL;
+
+/**
+ * uses Retrofit to get list of movies and details
+ * uses Gson to convert to "PopularMovie" object
+ * <p>
+ * Created by Zik Asghar 06/2020
+ */
 
 public class MovieDBRepo {
     private List<PopularMovie> moviesList = new ArrayList<>();
 
     public void start() {
         final int pages = 100;
-        Gson gson = new GsonBuilder().setLenient().create();
+        final Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build();
         MovieDataBaseApi api = retrofit.create(MovieDataBaseApi.class);
-        Call<Object> call;
+        Call<JsonObject> call;
         for (int i = 1; i < pages; i++) {
             call = api.getMovies(String.valueOf(i));
-            call.enqueue(new Callback<Object>() {
+            call.enqueue(new Callback<JsonObject>() {
                 @Override
-                public void onResponse(Call<Object> call,
-                                       Response<Object> response) {
+                public void onResponse(@NonNull Call<JsonObject> call,
+                                       @NonNull Response<JsonObject> response) {
                     if (response.isSuccessful()) {
-                        String jsonString = String.valueOf(response.body());
-                        String remainingJsonString = jsonString.substring(jsonString.indexOf("["));
-                        for (int i = 0; i < 19; i++) {
-                            try {
-                                PopularMovie popularMovie = new PopularMovie();
-                                String movie = remainingJsonString.
-                                        substring(remainingJsonString.indexOf("{"), remainingJsonString.indexOf("}") + 1);
-                                remainingJsonString = remainingJsonString.
-                                        substring(remainingJsonString.indexOf("{", 5));
-
-                                //GET TITLE FROM JSON STRING
-                                int titleIndexStart = movie.indexOf(JSON_TITLE_STRING) + JSON_TITLE_STRING.length();
-                                int titleIndexEnd = movie.indexOf(",", titleIndexStart);
-                                popularMovie.setTitle(
-                                        movie.substring(titleIndexStart, titleIndexEnd));
-                                //GET POSTERPATH FROM JSON STRING
-                                int posterPathIndexStart = movie.indexOf(JSON_POSTER_PATH_STRING) + JSON_POSTER_PATH_STRING.length();
-                                int posterPathIndexEnd = movie.indexOf(JSON_POSTER_PATH_END, posterPathIndexStart);
-                                popularMovie.setPosterPath(POSTER_URL +
-                                        movie.substring(posterPathIndexStart, posterPathIndexEnd + 4));
-                                //GET VOTE AVERAGE FROM JSON STRING
-                                int voteIndexStart = movie.indexOf(JSON_AVERAGE_VOTE_STRING) + JSON_AVERAGE_VOTE_STRING.length();
-                                int voteIndexEnd = movie.indexOf(",", voteIndexStart);
-                                popularMovie.setVoteAverage(
-                                        Float.parseFloat(movie.substring(voteIndexStart, voteIndexEnd)));
-                                //GET OVERVIEW FROM JSON STRING
-                                int overviewIndexStart = movie.indexOf(JSON_OVERVIEW_STRING) + JSON_OVERVIEW_STRING.length();
-                                int overviewIndexEnd = movie.indexOf(".,", overviewIndexStart);
-                                popularMovie.setOverview(movie.substring(overviewIndexStart, overviewIndexEnd));
-
-                                //GET RELEASE DATE FROM JSON STRING
-                                int releaseIndexStart = movie.indexOf(JSON_RELEASE_STRING) + JSON_RELEASE_STRING.length();
-                                popularMovie.setRelease(movie.substring(releaseIndexStart, releaseIndexStart + JSON_RELEASE_DATE_LENGTH));
-
-                                //ADD MOVIE TO THE LIST
-                                moviesList.add(popularMovie);
-                            } catch (Exception e) {
-                                Log.d("!!!!!!!!!!!", remainingJsonString);
+                        JsonObject jObj = response.body();
+                        assert jObj != null;
+                        JsonArray results = jObj.getAsJsonArray("results");
+                        for (int i = 0; i < results.size(); i++) {
+                            PopularMovie movie = new Gson().fromJson(results.get(i), PopularMovie.class);
+                            if (movie.getPosterPath() != null) {
+                                movie.setPosterPath(POSTER_URL + movie.getPosterPath());
+                                moviesList.add(movie);
                             }
                         }
                     } else {
@@ -87,13 +61,16 @@ public class MovieDBRepo {
                 }
 
                 @Override
-                public void onFailure(Call<Object> call, Throwable t) {
+                public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                     Log.d("onFailure", t.getLocalizedMessage());
                 }
             });
         }
     }
 
+    /**
+     * @return returns most current list of movies
+     */
     public List<PopularMovie> getMovies() {
         return moviesList;
     }

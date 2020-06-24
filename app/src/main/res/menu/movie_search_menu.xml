@@ -14,15 +14,15 @@
         android:id="@+id/order_by_name_Z_A"
         android:title="@string/order_by_name_Z_A" />
     <item
-        android:id="@+id/order_by_rating_L_H"
-        android:title="@string/order_by_rating_L_H" />
-    <item
         android:id="@+id/order_by_rating_H_L"
         android:title="@string/order_by_rating_H_L" />
     <item
-        android:id="@+id/order_by_year_N_O"
-        android:title="@string/order_by_year_N_O" />
+        android:id="@+id/order_by_rating_L_H"
+        android:title="@string/order_by_rating_L_H" />
     <item
-        android:id="@+id/order_by_year_O_N"
-        android:title="@string/order_by_year_O_N" />
+        android:id="@+id/order_by_popularity_L_M"
+        android:title="@string/order_by_popularity_M_L" />
+    <item
+        android:id="@+id/order_by_popularity_M_L"
+        android:title="@string/order_by_popularity_L_M" />
 </menu>

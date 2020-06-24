@@ -16,6 +16,12 @@ import com.zik.popularmoviesapp.model.PopularMovie;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Loads view of one movie, showing the poster, title, rating, year released and an overview
+ * <p>
+ * Created by Zik Asghar 06/2020
+ */
+
 public class MovieView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,12 @@ public class MovieView extends AppCompatActivity {
         Intent intent = getIntent();
         loadMovie((PopularMovie) intent.getParcelableExtra("movie"));
     }
+
+    /**
+     *  updates the view to show the details of the movie
+     *
+     * @param movie the movie that was selected by user
+     */
 
     private void loadMovie(PopularMovie movie) {
         setToolbar(movie);
@@ -35,6 +47,12 @@ public class MovieView extends AppCompatActivity {
         overview.setText(movie.getOverview());
         setVoteStars(movie);
     }
+
+    /**
+     * sets the toolbar, with movie title and close option
+     *
+     * @param movie
+     */
 
     private void setToolbar(PopularMovie movie) {
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -48,6 +66,11 @@ public class MovieView extends AppCompatActivity {
         });
     }
 
+    /**
+     * shows the rating of the movie by updating the number of stars
+     *
+     * @param movie
+     */
     private void setVoteStars(PopularMovie movie) {
         List<ImageView> starsArray = new ArrayList<>();
         TextView vote = findViewById(R.id.rating);

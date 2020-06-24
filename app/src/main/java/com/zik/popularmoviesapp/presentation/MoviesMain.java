@@ -22,6 +22,10 @@ import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Zik Asghar 06/2020
+ */
+
 public class MoviesMain extends AppCompatActivity
         implements MoviesAdapter.MovieClickHandler, SearchView.OnQueryTextListener {
     RecyclerView recyclerView;
@@ -39,12 +43,19 @@ public class MoviesMain extends AppCompatActivity
         setToolbar();
     }
 
+    /**
+     * sets adapter with list provided, initially empty, later updated from Api
+     */
     private void setAdapters() {
         adapter = new MoviesAdapter(moviesList, this);
         recyclerView = findViewById(R.id.rv);
         layoutManager = new GridLayoutManager(getApplicationContext(), 3);
-
     }
+
+    /**
+     * sets observer on the list to ensure when it is updated, adapter is also update
+     * (adapter.setAdapterList is called to update adapter once the list is returned from API call
+     */
 
     private void setObservers() {
         viewModel = new ViewModelProvider(this).get(MoviesMainViewModel.class);
@@ -61,6 +72,13 @@ public class MoviesMain extends AppCompatActivity
         });
     }
 
+    /**
+     * sets toolbar
+     *  - search functionality (using SearchView)
+     *  - menu options for sorting the adapter
+     *
+     */
+
     private void setToolbar() {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -74,32 +92,16 @@ public class MoviesMain extends AppCompatActivity
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 adapter.sort(item);
-/*                switch (item.getItemId()) {
-                    case R.id.order_by_name_A_Z:
-                        adapter.sortByName();
-                        break;
-                    case R.id.order_by_name_Z_A:
-                        adapter.sortByName();
-                        break;
-                    case R.id.order_by_rating_L_H:
-                        adapter.sortByRating();
-                        break;
-                    case R.id.order_by_rating_H_L:
-                        adapter.sortByRating();
-                        break;
-                    case R.id.order_by_year_O_N:
-                        adapter.sortByYear();
-                        break;
-                    case R.id.order_by_year_N_O:
-                        adapter.sortByYear();
-                        break;
-                }
-                return true;
-*/
                 return true;
             }
         });
     }
+
+    /**
+     * displays selected movie in new Activity
+     *
+     * @param m the movie that has been clicked on
+     */
 
     @Override
     public void onClick(PopularMovie m) {
@@ -108,6 +110,10 @@ public class MoviesMain extends AppCompatActivity
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param query the search string entered
+     */
     @Override
     public boolean onQueryTextSubmit(String query) {
         adapter.getFilter().filter(query);
