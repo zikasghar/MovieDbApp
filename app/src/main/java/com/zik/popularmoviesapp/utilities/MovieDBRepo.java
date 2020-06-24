@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.zik.popularmoviesapp.constants.Constants;
 import com.zik.popularmoviesapp.model.PopularMovie;
 
 import java.util.ArrayList;
@@ -30,9 +31,10 @@ import static com.zik.popularmoviesapp.constants.Constants.POSTER_URL;
  */
 
 public class MovieDBRepo {
-    private List<PopularMovie> moviesList = new ArrayList<>();
+    private List<PopularMovie> moviesList;
 
-    public void start() {
+    public void start(Constants.SortBy sortBy) {
+        moviesList = new ArrayList<>();
         final int pages = 100;
         final Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
@@ -40,7 +42,11 @@ public class MovieDBRepo {
         MovieDataBaseApi api = retrofit.create(MovieDataBaseApi.class);
         Call<JsonObject> call;
         for (int i = 1; i < pages; i++) {
-            call = api.getMovies(String.valueOf(i));
+            if (sortBy == Constants.SortBy.RATING) {
+                call = api.getMoviesByRated(String.valueOf(i));
+            } else {
+                call = api.getMoviesByPopular(String.valueOf(i));
+            }
             call.enqueue(new Callback<JsonObject>() {
                 @Override
                 public void onResponse(@NonNull Call<JsonObject> call,

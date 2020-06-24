@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zik.popularmoviesapp.R;
+import com.zik.popularmoviesapp.constants.Constants;
 import com.zik.popularmoviesapp.model.PopularMovie;
 import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
 
@@ -59,7 +60,7 @@ public class MoviesMain extends AppCompatActivity
 
     private void setObservers() {
         viewModel = new ViewModelProvider(this).get(MoviesMainViewModel.class);
-        viewModel.init();
+        viewModel.init(Constants.SortBy.POPULAR);
         viewModel.movies.observe(this, new Observer<Object>() {
             @Override
             public void onChanged(Object o) {
@@ -74,9 +75,8 @@ public class MoviesMain extends AppCompatActivity
 
     /**
      * sets toolbar
-     *  - search functionality (using SearchView)
-     *  - menu options for sorting the adapter
-     *
+     * - search functionality (using SearchView)
+     * - menu options for sorting the adapter
      */
 
     private void setToolbar() {
@@ -91,7 +91,7 @@ public class MoviesMain extends AppCompatActivity
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                adapter.sort(item);
+                sort(item);
                 return true;
             }
         });
@@ -111,7 +111,6 @@ public class MoviesMain extends AppCompatActivity
     }
 
     /**
-     *
      * @param query the search string entered
      */
     @Override
@@ -125,5 +124,25 @@ public class MoviesMain extends AppCompatActivity
         adapter.getFilter().filter(query);
         return false;
     }
+
+    /**
+     * sorts the list in numerical order
+     *
+     * @param item decides which item the list needs to be sorted by
+     *             (rating or popularity)
+     */
+
+    public void sort(final MenuItem item) {
+        if (!moviesList.isEmpty()) {
+            switch (item.getItemId()) {
+                case R.id.order_by_popularity:
+                    viewModel.init(Constants.SortBy.POPULAR);
+                case R.id.order_by_rated:
+                    viewModel.init(Constants.SortBy.RATING);
+            }
+        }
+    }
+
 }
+
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.zik.popularmoviesapp.constants.Constants;
 import com.zik.popularmoviesapp.model.PopularMovie;
 import com.zik.popularmoviesapp.utilities.MovieDBRepo;
 
@@ -17,8 +18,8 @@ public class MoviesMainViewModel extends ViewModel {
     public MutableLiveData<List<PopularMovie>> movies = new MutableLiveData<>();
     private MovieDBRepo repo = new MovieDBRepo();
 
-    public void init() {
-        repo.start();
+    public void init(Constants.SortBy sortBy) {
+        repo.start(sortBy);
         movies.postValue(repo.getMovies());
     }
 

@@ -1,7 +1,6 @@
 package com.zik.popularmoviesapp.presentation;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -15,12 +14,8 @@ import com.bumptech.glide.Glide;
 import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.model.PopularMovie;
 
-import java.text.Collator;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * exposes list of movies to a recyclerview
@@ -163,45 +158,5 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesView
                 notifyDataSetChanged();
             }
         };
-    }
-
-    /**
-     * sorts the list in alphbetical.numerical order
-     * uses Collator & Collections.sort()
-     *
-     * @param item decides which item the list needs to be sorted by
-     *             (name, rating or popularity)
-     */
-
-    public void sort(final MenuItem item) {
-        final Collator collator = Collator.getInstance(Locale.UK);
-        if (!filteredMovies.isEmpty()) {
-            Collections.sort(filteredMovies, new Comparator<PopularMovie>() {
-                @Override
-                public int compare(PopularMovie movie1, PopularMovie movie2) {
-                    switch (item.getItemId()) {
-                        case R.id.order_by_name_A_Z:
-                        case R.id.order_by_name_Z_A:
-                            return collator.compare(movie1.getTitle(), movie2.getTitle());
-                        case R.id.order_by_rating_L_H:
-                        case R.id.order_by_rating_H_L:
-                            return collator.compare(String.valueOf(movie1.getVoteAverage()),
-                                    String.valueOf(movie2.getVoteAverage()));
-                        case R.id.order_by_popularity_L_M:
-                        case R.id.order_by_popularity_M_L:
-                            String m1 = String.valueOf(movie1.getPopularity());
-                            String m2 = String.valueOf(movie2.getPopularity());
-                            return collator.compare(m1, m2);
-                    }
-                    return 0;
-                }
-            });
-            if (item.getItemId() == R.id.order_by_name_Z_A ||
-                    item.getItemId() == R.id.order_by_rating_H_L ||
-                    item.getItemId() == R.id.order_by_popularity_L_M) {
-                Collections.reverse(filteredMovies);
-            }
-        }
-        notifyDataSetChanged();
     }
 }
