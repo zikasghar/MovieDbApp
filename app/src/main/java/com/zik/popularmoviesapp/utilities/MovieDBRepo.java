@@ -1,7 +1,5 @@
 package com.zik.popularmoviesapp.utilities;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -68,7 +66,6 @@ public class MovieDBRepo {
 
                 @Override
                 public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                    Log.d("onFailure", t.getLocalizedMessage());
                 }
             });
         }
