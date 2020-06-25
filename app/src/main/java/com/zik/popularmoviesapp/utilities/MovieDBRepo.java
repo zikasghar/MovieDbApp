@@ -37,7 +37,7 @@ public class MovieDBRepo {
         final Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build();
-        MovieDataBaseApi api = retrofit.create(MovieDataBaseApi.class);
+        DBApi api = retrofit.create(DBApi.class);
         Call<JsonObject> call;
         for (int i = 1; i < pages; i++) {
             if (sortBy == Constants.SortBy.RATING) {
