@@ -6,5 +6,6 @@
     <string name="order_by_rating">Order by Rating</string>
     <string name="order_by_popularity">Order by Popularity</string>
     <string name="uh_oh_something_went_wrong">Uh-Oh! Something went wrong</string>
+    <string name="released">Released:</string>
 
 </resources>

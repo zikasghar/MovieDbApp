@@ -12,4 +12,6 @@ public class Constants {
 
     public enum SortBy {POPULAR, RATING}
 
+    public static final String MOVIE = "movie";
+
 }
