@@ -1,7 +1,5 @@
 package com.zik.popularmoviesapp.utilities;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -35,7 +33,6 @@ public class MovieDBRepo {
 
     public void start(Constants.SortBy sortBy) {
         moviesList = new ArrayList<>();
-        Log.d("start()", "called " + sortBy + moviesList.size());
         final int pages = 100;
         final Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
