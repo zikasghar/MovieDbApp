@@ -60,15 +60,19 @@ public class MoviesMain extends AppCompatActivity
 
     private void setObservers() {
         viewModel = new ViewModelProvider(this).get(MoviesMainViewModel.class);
-        viewModel.init(Constants.SortBy.POPULAR);
+        viewModel.getMovies(Constants.SortBy.POPULAR);
         viewModel.movies.observe(this, new Observer<Object>() {
             @Override
             public void onChanged(Object o) {
-                moviesList = viewModel.getMoviesList().getValue();
-                adapter.setAdapterList(moviesList);
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(adapter);
-                findViewById(R.id.pb_loading_indicator).setVisibility(View.INVISIBLE);
+                if (moviesList.size() == 0) {
+                    findViewById(R.id.pb_loading_indicator).setVisibility(View.VISIBLE);
+                    moviesList = viewModel.getMoviesList(Constants.SortBy.POPULAR).getValue();
+                } else {
+                    findViewById(R.id.pb_loading_indicator).setVisibility(View.INVISIBLE);
+                    adapter.setAdapterList(moviesList);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(adapter);
+                }
             }
         });
     }
@@ -105,8 +109,9 @@ public class MoviesMain extends AppCompatActivity
 
     @Override
     public void onClick(PopularMovie m) {
+        findViewById(R.id.pb_loading_indicator).setVisibility(View.VISIBLE);
         Intent intent = new Intent(getApplicationContext(), MovieView.class);
-        intent.putExtra("movie", m);
+        intent.putExtra(Constants.MOVIE, m);
         startActivity(intent);
     }
 
@@ -136,9 +141,10 @@ public class MoviesMain extends AppCompatActivity
         if (!moviesList.isEmpty()) {
             switch (item.getItemId()) {
                 case R.id.order_by_popularity:
-                    viewModel.init(Constants.SortBy.POPULAR);
+                    moviesList = viewModel.getMoviesList(Constants.SortBy.POPULAR).getValue();
+                    break;
                 case R.id.order_by_rated:
-                    viewModel.init(Constants.SortBy.RATING);
+                    moviesList = viewModel.getMoviesList(Constants.SortBy.RATING).getValue();
             }
         }
     }

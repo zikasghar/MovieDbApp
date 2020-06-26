@@ -1,5 +1,7 @@
 package com.zik.popularmoviesapp.utilities;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -33,12 +35,18 @@ public class MovieDBRepo {
 
     public void start(Constants.SortBy sortBy) {
         moviesList = new ArrayList<>();
+        Log.d("start()", "called " + sortBy + moviesList.size());
         final int pages = 100;
         final Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build();
         DBApi api = retrofit.create(DBApi.class);
         Call<JsonObject> call;
+        // API call from The Movie Database, only allows 20 movies to be returned per call
+        // for loop used to go through each page
+        // "movie/popular?api_key=" + API.KEY + "&page=page1"
+        // "movie/popular?api_key=" + API.KEY + "&page=page2" ...
+        // "movie/popular?api_key=" + API.KEY + "&page=page"(max_number_of_pages)
         for (int i = 1; i < pages; i++) {
             if (sortBy == Constants.SortBy.RATING) {
                 call = api.getMoviesByRated(String.valueOf(i));

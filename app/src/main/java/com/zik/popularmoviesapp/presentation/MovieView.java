@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.zik.popularmoviesapp.R;
+import com.zik.popularmoviesapp.constants.Constants;
 import com.zik.popularmoviesapp.model.PopularMovie;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class MovieView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_view);
         Intent intent = getIntent();
-        loadMovie((PopularMovie) intent.getParcelableExtra("movie"));
+        loadMovie((PopularMovie) intent.getParcelableExtra(Constants.MOVIE));
     }
 
     /**
@@ -40,12 +41,16 @@ public class MovieView extends AppCompatActivity {
     private void loadMovie(PopularMovie movie) {
         setToolbar(movie);
         ImageView movieView = findViewById(R.id.movie_view);
-        Glide.with(movieView).load(movie.getPosterPath()).into(movieView);
-        TextView date = findViewById(R.id.release_tv);
-        date.append(movie.getRelease());
-        TextView overview = findViewById(R.id.overview_tv);
-        overview.setText(movie.getOverview());
-        setVoteStars(movie);
+        try {
+            Glide.with(movieView).load(movie.getPosterPath()).into(movieView);
+            TextView date = findViewById(R.id.release_tv);
+            date.append(movie.getRelease());
+            TextView overview = findViewById(R.id.overview_tv);
+            overview.setText(movie.getOverview());
+            setVoteStars(movie);
+        } catch (Exception e) {
+            finish();
+        }
     }
 
     /**
@@ -72,6 +77,8 @@ public class MovieView extends AppCompatActivity {
      * @param movie
      */
     private void setVoteStars(PopularMovie movie) {
+        // nullability is checked at getting movie details from API,
+        // movie would not have loaded into list if any of the details are missing
         List<ImageView> starsArray = new ArrayList<>();
         TextView vote = findViewById(R.id.rating);
         float stars = movie.getVoteAverage() / 2;

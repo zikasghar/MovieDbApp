@@ -18,7 +18,7 @@
         <activity
             android:name=".presentation.MoviesMain"
             android:label="@string/title_activity_movies_main"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".presentation.MovieView"
             android:label="@string/title_activity_movie_view"

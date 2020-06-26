@@ -18,12 +18,13 @@ public class MoviesMainViewModel extends ViewModel {
     public MutableLiveData<List<PopularMovie>> movies = new MutableLiveData<>();
     private MovieDBRepo repo = new MovieDBRepo();
 
-    public void init(Constants.SortBy sortBy) {
+    public void getMovies(Constants.SortBy sortBy) {
         repo.start(sortBy);
         movies.postValue(repo.getMovies());
     }
 
-    public LiveData<List<PopularMovie>> getMoviesList() {
+    public LiveData<List<PopularMovie>> getMoviesList(Constants.SortBy sortBy) {
+        getMovies(sortBy);
         return movies;
     }
 
