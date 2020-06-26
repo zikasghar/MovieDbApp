@@ -33,7 +33,7 @@ public class MovieView extends AppCompatActivity {
     }
 
     /**
-     *  updates the view to show the details of the movie
+     * updates the view to show the details of the movie
      *
      * @param movie the movie that was selected by user
      */
