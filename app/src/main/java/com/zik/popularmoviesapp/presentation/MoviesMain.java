@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.constants.Constants;
 import com.zik.popularmoviesapp.model.PopularMovie;
+import com.zik.popularmoviesapp.utilities.HelperFunctions;
 import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
 
 import java.util.ArrayList;
@@ -50,7 +51,8 @@ public class MoviesMain extends AppCompatActivity
     private void setAdapters() {
         adapter = new MoviesAdapter(moviesList, this);
         recyclerView = findViewById(R.id.rv);
-        layoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        layoutManager = new GridLayoutManager(getApplicationContext(),
+                HelperFunctions.calculateNoOfColumns(getApplicationContext()));
     }
 
     /**
@@ -113,6 +115,7 @@ public class MoviesMain extends AppCompatActivity
         Intent intent = new Intent(getApplicationContext(), MovieView.class);
         intent.putExtra(Constants.MOVIE, m);
         startActivity(intent);
+        findViewById(R.id.pb_loading_indicator).setVisibility(View.INVISIBLE);
     }
 
     /**

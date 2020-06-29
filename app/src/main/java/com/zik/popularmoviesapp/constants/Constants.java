@@ -1,5 +1,7 @@
 package com.zik.popularmoviesapp.constants;
 
+import com.zik.popularmoviesapp.BuildConfig;
+
 /**
  * Constant fields used
  * <p>
@@ -13,5 +15,11 @@ public class Constants {
     public enum SortBy {POPULAR, RATING}
 
     public static final String MOVIE = "movie";
+
+    // DPApi
+    public static final String KEY = BuildConfig.THE_MOVIE_DATABASE_API_KEY;
+    public static final String QUERY_BY_POPULAR = "movie/popular?api_key=";
+    public static final String QUERY_BY_RATED = "movie/top_rated?api_key=";
+    public static final String APPEND_QUERY = "page";
 
 }
