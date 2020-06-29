@@ -1,21 +1,22 @@
 package com.zik.popularmoviesapp.utilities;
 
 import com.google.gson.JsonObject;
-import com.zik.popularmoviesapp.BuildConfig;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface DBApi {
-    String KEY = BuildConfig.THE_MOVIE_DATABASE_API_KEY;
-    String QUERY = "movie/popular?api_key=";
-    String APPEND_QUERY = "page";
+import static com.zik.popularmoviesapp.constants.Constants.APPEND_QUERY;
+import static com.zik.popularmoviesapp.constants.Constants.KEY;
+import static com.zik.popularmoviesapp.constants.Constants.QUERY_BY_POPULAR;
+import static com.zik.popularmoviesapp.constants.Constants.QUERY_BY_RATED;
 
-    @GET(QUERY + KEY)
+public interface DBApi {
+
+    @GET(QUERY_BY_POPULAR + KEY)
     Call<JsonObject> getMoviesByPopular(@Query(APPEND_QUERY) String page);
 
-    @GET(QUERY + KEY)
+    @GET(QUERY_BY_RATED + KEY)
     Call<JsonObject> getMoviesByRated(@Query(APPEND_QUERY) String page);
 
 }
