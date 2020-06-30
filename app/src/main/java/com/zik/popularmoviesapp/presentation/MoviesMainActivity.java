@@ -10,6 +10,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.constants.Constants;
+import com.zik.popularmoviesapp.databinding.ActivityMoviesMainViewBinding;
 import com.zik.popularmoviesapp.model.PopularMovie;
 import com.zik.popularmoviesapp.utilities.HelperFunctions;
 import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
@@ -28,9 +30,9 @@ import java.util.List;
  * Created by Zik Asghar 06/2020
  */
 
-public class MoviesMain extends AppCompatActivity
+public class MoviesMainActivity extends AppCompatActivity
         implements MoviesAdapter.MovieClickHandler, SearchView.OnQueryTextListener {
-    RecyclerView recyclerView;
+    ActivityMoviesMainViewBinding binding;
     RecyclerView.LayoutManager layoutManager;
     MoviesAdapter adapter;
     MoviesMainViewModel viewModel;
@@ -40,6 +42,7 @@ public class MoviesMain extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies_main_view);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movies_main_view);
         setAdapters();
         setObservers();
         setToolbar();
@@ -50,7 +53,6 @@ public class MoviesMain extends AppCompatActivity
      */
     private void setAdapters() {
         adapter = new MoviesAdapter(moviesList, this);
-        recyclerView = findViewById(R.id.rv);
         layoutManager = new GridLayoutManager(getApplicationContext(),
                 HelperFunctions.calculateNoOfColumns(getApplicationContext()));
     }
@@ -67,13 +69,13 @@ public class MoviesMain extends AppCompatActivity
             @Override
             public void onChanged(Object o) {
                 if (moviesList.size() == 0) {
-                    findViewById(R.id.pb_loading_indicator).setVisibility(View.VISIBLE);
+                    binding.pbLoadingIndicator.setVisibility(View.VISIBLE);
                     moviesList = viewModel.getMoviesList(Constants.SortBy.POPULAR).getValue();
                 } else {
-                    findViewById(R.id.pb_loading_indicator).setVisibility(View.INVISIBLE);
+                    binding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
                     adapter.setAdapterList(moviesList);
-                    recyclerView.setLayoutManager(layoutManager);
-                    recyclerView.setAdapter(adapter);
+                    binding.rv.setLayoutManager(layoutManager);
+                    binding.rv.setAdapter(adapter);
                 }
             }
         });
@@ -87,14 +89,13 @@ public class MoviesMain extends AppCompatActivity
 
     private void setToolbar() {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
-        toolbar.inflateMenu(R.menu.movie_search_menu);
-        SearchView searchView = (SearchView) toolbar.getMenu().findItem(R.id.menu_search).getActionView();
+        binding.toolbar.setTitle(R.string.app_name);
+        binding.toolbar.inflateMenu(R.menu.movie_search_menu);
+        SearchView searchView = (SearchView) binding.toolbar.getMenu().findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(this);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 sort(item);
@@ -111,11 +112,11 @@ public class MoviesMain extends AppCompatActivity
 
     @Override
     public void onClick(PopularMovie m) {
-        findViewById(R.id.pb_loading_indicator).setVisibility(View.VISIBLE);
-        Intent intent = new Intent(getApplicationContext(), MovieView.class);
+        binding.pbLoadingIndicator.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(getApplicationContext(), MovieViewActivity.class);
         intent.putExtra(Constants.MOVIE, m);
         startActivity(intent);
-        findViewById(R.id.pb_loading_indicator).setVisibility(View.INVISIBLE);
+        binding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
     /**

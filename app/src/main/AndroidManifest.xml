@@ -16,11 +16,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".presentation.MoviesMain"
+            android:name=".presentation.MoviesMainActivity"
             android:label="@string/title_activity_movies_main"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".presentation.MovieView"
+            android:name=".presentation.MovieViewActivity"
             android:label="@string/title_activity_movie_view"
             android:theme="@style/AppTheme" />
         <activity

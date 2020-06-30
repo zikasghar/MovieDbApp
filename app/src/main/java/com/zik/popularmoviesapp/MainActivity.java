@@ -7,7 +7,7 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.zik.popularmoviesapp.presentation.MoviesMain;
+import com.zik.popularmoviesapp.presentation.MoviesMainActivity;
 
 /**
  * Created by Zik Asghar 06/2020
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                Intent intent = new Intent(getApplicationContext(), MoviesMain.class);
+                Intent intent = new Intent(getApplicationContext(), MoviesMainActivity.class);
                 startActivity(intent);
             }
         }.start();
