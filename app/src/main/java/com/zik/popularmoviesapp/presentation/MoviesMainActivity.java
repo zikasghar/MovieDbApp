@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.constants.Constants;
-import com.zik.popularmoviesapp.databinding.ActivityMoviesMainViewBinding;
+import com.zik.popularmoviesapp.databinding.ActivityMainViewBinding;
 import com.zik.popularmoviesapp.model.PopularMovie;
 import com.zik.popularmoviesapp.utilities.HelperFunctions;
 import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
@@ -32,7 +32,7 @@ import java.util.List;
 
 public class MoviesMainActivity extends AppCompatActivity
         implements MoviesAdapter.MovieClickHandler, SearchView.OnQueryTextListener {
-    ActivityMoviesMainViewBinding binding;
+    ActivityMainViewBinding binding;
     RecyclerView.LayoutManager layoutManager;
     MoviesAdapter adapter;
     MoviesMainViewModel viewModel;
@@ -41,8 +41,8 @@ public class MoviesMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movies_main_view);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_movies_main_view);
+        setContentView(R.layout.activity_main_view);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main_view);
         setAdapters();
         setObservers();
         setToolbar();
