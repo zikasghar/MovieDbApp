@@ -13,18 +13,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.constants.Constants;
+import com.zik.popularmoviesapp.data.HelperFunctions;
 import com.zik.popularmoviesapp.databinding.ActivityMainViewBinding;
 import com.zik.popularmoviesapp.model.PopularMovie;
-import com.zik.popularmoviesapp.utilities.HelperFunctions;
 import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Zik Asghar 06/2020
@@ -34,51 +32,42 @@ public class MoviesMainActivity extends AppCompatActivity
         implements MoviesAdapter.MovieClickHandler, SearchView.OnQueryTextListener {
     ActivityMainViewBinding binding;
     RecyclerView.LayoutManager layoutManager;
-    MoviesAdapter adapter;
     MoviesMainViewModel viewModel;
-    List<PopularMovie> moviesList = new ArrayList<>();
+    MoviesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main_view);
-        setAdapters();
+        binding.pbLoadingIndicator.setVisibility(View.VISIBLE);
+        setAdapter();
+        viewModel = new ViewModelProvider(this).get(MoviesMainViewModel.class);
         setObservers();
         setToolbar();
     }
 
-    /**
-     * sets adapter with list provided, initially empty, later updated from Api
-     */
-    private void setAdapters() {
-        adapter = new MoviesAdapter(moviesList, this);
-        layoutManager = new GridLayoutManager(getApplicationContext(),
-                HelperFunctions.calculateNoOfColumns(getApplicationContext()));
+    private void setAdapter() {
+        layoutManager = new GridLayoutManager(this,
+                HelperFunctions.calculateNoOfColumns(this));
+        RecyclerView recyclerView = findViewById(R.id.rv);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new MoviesAdapter(this, this);
+        recyclerView.setAdapter(adapter);
     }
 
     /**
      * sets observer on the list to ensure when it is updated, adapter is also update
      * (adapter.setAdapterList is called to update adapter once the list is returned from API call
      */
-
     private void setObservers() {
-        viewModel = new ViewModelProvider(this).get(MoviesMainViewModel.class);
-        viewModel.getMovies(Constants.SortBy.POPULAR);
-        viewModel.movies.observe(this, new Observer<Object>() {
+        viewModel.moviePagedList.observe(this, new Observer<PagedList<PopularMovie>>() {
             @Override
-            public void onChanged(Object o) {
-                if (moviesList.size() == 0) {
-                    binding.pbLoadingIndicator.setVisibility(View.VISIBLE);
-                    moviesList = viewModel.getMoviesList(Constants.SortBy.POPULAR).getValue();
-                } else {
-                    binding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
-                    adapter.setAdapterList(moviesList);
-                    binding.rv.setLayoutManager(layoutManager);
-                    binding.rv.setAdapter(adapter);
-                }
+            public void onChanged(PagedList<PopularMovie> popularMovies) {
+                adapter.submitList(popularMovies);
             }
         });
+        binding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
     /**
@@ -98,7 +87,14 @@ public class MoviesMainActivity extends AppCompatActivity
         binding.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                sort(item);
+                switch (item.getItemId()) {
+                    case R.id.order_by_popularity:
+                        viewModel.getViewByPopular();
+                        break;
+                    case R.id.order_by_rated:
+                        viewModel.getViewByRating();
+                }
+                setObservers();
                 return true;
             }
         });
@@ -124,35 +120,27 @@ public class MoviesMainActivity extends AppCompatActivity
      */
     @Override
     public boolean onQueryTextSubmit(String query) {
-        adapter.getFilter().filter(query);
+        viewModel.getViewBySearch(query);
+        viewModel.moviePagedList.observe(this, new Observer<PagedList<PopularMovie>>() {
+            @Override
+            public void onChanged(PagedList<PopularMovie> popularMovies) {
+                adapter.submitList(popularMovies);
+            }
+        });
         return false;
     }
+
 
     @Override
     public boolean onQueryTextChange(String query) {
-        adapter.getFilter().filter(query);
+        if (!query.equals("")) {
+            viewModel.getViewBySearch(query);
+        } else {
+            viewModel.getViewByPopular();
+        }
+        setObservers();
         return false;
     }
-
-    /**
-     * sorts the list in numerical order
-     *
-     * @param item decides which item the list needs to be sorted by
-     *             (rating or popularity)
-     */
-
-    public void sort(final MenuItem item) {
-        if (!moviesList.isEmpty()) {
-            switch (item.getItemId()) {
-                case R.id.order_by_popularity:
-                    moviesList = viewModel.getMoviesList(Constants.SortBy.POPULAR).getValue();
-                    break;
-                case R.id.order_by_rated:
-                    moviesList = viewModel.getMoviesList(Constants.SortBy.RATING).getValue();
-            }
-        }
-    }
-
 }
 
 

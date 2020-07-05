@@ -16,15 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/movie_view"
-        android:layout_width="wrap_content"
+    <include
+        layout="@layout/movie_view_poster"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/portrait_scrollview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:srcCompat="@drawable/db_logo_foreground" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
         android:id="@+id/portrait_scrollview"
@@ -34,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/movie_view">
+        app:layout_constraintTop_toBottomOf="@id/poster_trailer_layout">
 
         <include
             layout="@layout/movie_view_details"

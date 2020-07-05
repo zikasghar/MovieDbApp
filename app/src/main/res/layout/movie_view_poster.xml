@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/poster_trailer_layout"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    app:layout_constraintBottom_toTopOf="@id/portrait_scrollview"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+    <ImageView
+        android:id="@+id/poster_iv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/movie_poster"
+        app:layout_constraintBottom_toTopOf="@id/watch_trailer_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/db_logo_foreground" />
+
+    <ImageView
+        android:id="@+id/watch_trailer_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/play_trailer"
+        app:layout_constraintBottom_toBottomOf="@id/poster_trailer_layout"
+        app:layout_constraintEnd_toStartOf="@id/watch_trailer_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/poster_iv"
+        app:srcCompat="@android:drawable/ic_media_play" />
+
+    <TextView
+        android:id="@+id/watch_trailer_tv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/watch_trailer"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/watch_trailer_iv"
+        app:layout_constraintTop_toTopOf="@id/watch_trailer_iv" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.zik.popularmoviesapp.utilities;
+package com.zik.popularmoviesapp.data;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
