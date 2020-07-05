@@ -5,6 +5,7 @@
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:background">@color/colorAccent</item>
     </style>
@@ -20,10 +21,16 @@
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:background">@color/colorAccent</item>
-        <item name="color">@color/colorPrimary</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:textSize">30sp</item>
         <item name="android:textColorPrimary">@color/colorPrimary</item>
         <item name="android:textColorHint">@color/colorPrimaryDark</item>
         <item name="android:tint">@color/colorPrimary</item>
+    </style>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">

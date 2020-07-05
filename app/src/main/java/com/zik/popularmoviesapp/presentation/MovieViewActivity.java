@@ -17,6 +17,8 @@ import com.zik.popularmoviesapp.model.PopularMovie;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zik.popularmoviesapp.constants.Constants.POSTER_URL;
+
 /**
  * Loads view of one movie, showing the poster, title, rating, year released and an overview
  * <p>
@@ -40,9 +42,9 @@ public class MovieViewActivity extends AppCompatActivity {
 
     private void loadMovie(PopularMovie movie) {
         setToolbar(movie);
-        ImageView movieView = findViewById(R.id.movie_view);
+        ImageView movieView = findViewById(R.id.poster_iv);
         try {
-            Glide.with(movieView).load(movie.getPosterPath()).into(movieView);
+            Glide.with(movieView).load(POSTER_URL + movie.getPosterPath()).into(movieView);
             TextView date = findViewById(R.id.release_tv);
             date.append(movie.getRelease());
             TextView overview = findViewById(R.id.overview_tv);
@@ -77,8 +79,6 @@ public class MovieViewActivity extends AppCompatActivity {
      * @param movie
      */
     private void setVoteStars(PopularMovie movie) {
-        // nullability is checked at getting movie details from API,
-        // movie would not have loaded into list if any of the details are missing
         List<ImageView> starsArray = new ArrayList<>();
         TextView vote = findViewById(R.id.rating);
         float stars = movie.getVoteAverage() / 2;
