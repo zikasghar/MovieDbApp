@@ -19,10 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.constants.Constants;
-import com.zik.popularmoviesapp.data.HelperFunctions;
+import com.zik.popularmoviesapp.data.HelperMethods;
 import com.zik.popularmoviesapp.databinding.ActivityMainViewBinding;
 import com.zik.popularmoviesapp.model.PopularMovie;
+import com.zik.popularmoviesapp.model.Trailer;
 import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
+
+import java.util.List;
+
+import static com.zik.popularmoviesapp.constants.Constants.BLANK;
+import static com.zik.popularmoviesapp.constants.Constants.TRAILER;
 
 /**
  * Created by Zik Asghar 06/2020
@@ -49,7 +55,7 @@ public class MoviesMainActivity extends AppCompatActivity
 
     private void setAdapter() {
         layoutManager = new GridLayoutManager(this,
-                HelperFunctions.calculateNoOfColumns(this));
+                HelperMethods.calculateNoOfColumns(this));
         RecyclerView recyclerView = findViewById(R.id.rv);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MoviesAdapter(this, this);
@@ -107,11 +113,18 @@ public class MoviesMainActivity extends AppCompatActivity
      */
 
     @Override
-    public void onClick(PopularMovie m) {
+    public void onClick(final PopularMovie m) {
+        final Intent intent = new Intent(getApplicationContext(), MovieViewActivity.class);
         binding.pbLoadingIndicator.setVisibility(View.VISIBLE);
-        Intent intent = new Intent(getApplicationContext(), MovieViewActivity.class);
-        intent.putExtra(Constants.MOVIE, m);
-        startActivity(intent);
+        viewModel.getTrailerList(m.getId());
+        viewModel.trailerList.observe(this, new Observer<List<Trailer>>() {
+            @Override
+            public void onChanged(List<Trailer> trailers) {
+                intent.putExtra(TRAILER, viewModel.trailerList.getValue().get(0).getKey());
+                intent.putExtra(Constants.MOVIE, m);
+                startActivity(intent);
+            }
+        });
         binding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
     }
 
@@ -133,7 +146,7 @@ public class MoviesMainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextChange(String query) {
-        if (!query.equals("")) {
+        if (!query.equals(BLANK)) {
             viewModel.getViewBySearch(query);
         } else {
             viewModel.getViewByPopular();

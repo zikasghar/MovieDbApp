@@ -11,18 +11,22 @@ import com.google.android.youtube.player.YouTubePlayerView;
 import com.zik.popularmoviesapp.R;
 
 import static com.zik.popularmoviesapp.constants.Constants.MOVIE_ID_STRING;
+import static com.zik.popularmoviesapp.constants.Constants.TRAILER;
 import static com.zik.popularmoviesapp.constants.Constants.YOUTUBE_API_KEY;
 
 public class MoviePlayer extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
     YouTubePlayerView youTubePlayerView;
+    String movieId;
+    String trailerId;
 
     @Override
     protected void onCreate(Bundle sis) {
         super.onCreate(sis);
         setContentView(R.layout.movie_player);
         Intent intent = getIntent();
-        String id = intent.getStringExtra(MOVIE_ID_STRING);
+        movieId = intent.getStringExtra(MOVIE_ID_STRING);
+        trailerId = intent.getStringExtra(TRAILER);
         youTubePlayerView = findViewById(R.id.youtube_view);
         youTubePlayerView.initialize(YOUTUBE_API_KEY, this);
     }
@@ -31,9 +35,8 @@ public class MoviePlayer extends YouTubeBaseActivity implements YouTubePlayer.On
     public void onInitializationSuccess(YouTubePlayer.Provider provider,
                                         YouTubePlayer youTubePlayer,
                                         boolean b) {
-        final String trailerKey = getIntent().getStringExtra("trailerKey");
         if (!b) {
-            youTubePlayer.cueVideo("fhWaJi1Hsfo"); // Plays https://www.youtube.com/watch?v=fhWaJi1Hsfo
+            youTubePlayer.cueVideo(trailerId);
         }
     }
 

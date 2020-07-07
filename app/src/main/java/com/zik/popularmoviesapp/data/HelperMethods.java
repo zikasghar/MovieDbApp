@@ -3,7 +3,7 @@ package com.zik.popularmoviesapp.data;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-public class HelperFunctions {
+public class HelperMethods {
 
     // Helper method to calculate the best amount of columns to be displayed on a device
     public static int calculateNoOfColumns(Context context) {

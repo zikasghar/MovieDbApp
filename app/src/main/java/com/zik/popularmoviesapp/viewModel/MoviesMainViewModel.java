@@ -9,10 +9,14 @@ import androidx.paging.PagedList;
 import com.zik.popularmoviesapp.data.MovieDataSource;
 import com.zik.popularmoviesapp.data.MoviesDataSourceFactory;
 import com.zik.popularmoviesapp.model.PopularMovie;
+import com.zik.popularmoviesapp.model.Trailer;
+
+import java.util.List;
 
 import static com.zik.popularmoviesapp.constants.Constants.RequestType.POPULAR;
 import static com.zik.popularmoviesapp.constants.Constants.RequestType.RATING;
 import static com.zik.popularmoviesapp.constants.Constants.RequestType.SEARCH_BY;
+import static com.zik.popularmoviesapp.constants.Constants.RequestType.TRAILER_DETAILS;
 
 /**
  * Created by Zik Asghar 06/2020
@@ -20,6 +24,7 @@ import static com.zik.popularmoviesapp.constants.Constants.RequestType.SEARCH_BY
 
 public class MoviesMainViewModel extends ViewModel {
     public LiveData<PagedList<PopularMovie>> moviePagedList;
+    public LiveData<List<Trailer>> trailerList;
     LiveData<PageKeyedDataSource<Integer, PopularMovie>> liveDataSource;
 
     public MoviesMainViewModel() {
@@ -52,4 +57,10 @@ public class MoviesMainViewModel extends ViewModel {
         moviePagedList = list;
     }
 
+    public void getTrailerList(String movieId) {
+        MovieDataSource movieDataSource = new MovieDataSource(TRAILER_DETAILS, movieId);
+        movieDataSource.getTrailersResponse();
+        trailerList = movieDataSource.getTrailers();
+
+    }
 }

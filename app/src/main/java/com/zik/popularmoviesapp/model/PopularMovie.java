@@ -6,10 +6,13 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Popular Movie Object
+ * <p>
  * Created by Zik Asghar 06/2020
  */
 
 public class PopularMovie implements Parcelable {
+    private String id;
     private String title;
     private String overview;
     @SerializedName("release_date")
@@ -21,12 +24,14 @@ public class PopularMovie implements Parcelable {
     private float popularity;
 
 
-    public PopularMovie(String title,
+    public PopularMovie(String id,
+                        String title,
                         String overview,
                         String release,
                         String posterPath,
                         float voteAverage,
                         float popularity) {
+        this.id = id;
         this.title = title;
         this.overview = overview;
         this.release = release;
@@ -36,6 +41,7 @@ public class PopularMovie implements Parcelable {
     }
 
     protected PopularMovie(Parcel in) {
+        id = in.readString();
         title = in.readString();
         overview = in.readString();
         release = in.readString();
@@ -55,6 +61,14 @@ public class PopularMovie implements Parcelable {
             return new PopularMovie[size];
         }
     };
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -112,6 +126,7 @@ public class PopularMovie implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(release);

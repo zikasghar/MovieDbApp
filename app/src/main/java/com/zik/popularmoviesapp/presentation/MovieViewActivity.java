@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.zik.popularmoviesapp.constants.Constants.POSTER_URL;
+import static com.zik.popularmoviesapp.constants.Constants.TRAILER;
 
 /**
  * Loads view of one movie, showing the poster, title, rating, year released and an overview
@@ -32,18 +33,19 @@ public class MovieViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_view);
         Intent intent = getIntent();
-        loadMovie((PopularMovie) intent.getParcelableExtra(Constants.MOVIE));
+        PopularMovie popularMovie = intent.getParcelableExtra(Constants.MOVIE);
         setListeners();
+        loadMovie(popularMovie);
     }
 
     private void setListeners() {
         ImageButton trailerBtn = findViewById(R.id.watch_trailer_btn);
-        final String trailerKey = getIntent().getStringExtra("trailer");
+        final String trailerKey = getIntent().getStringExtra(TRAILER);
         trailerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent trailerIntent = new Intent(getApplicationContext(), MoviePlayer.class);
-                trailerIntent.putExtra("trailerKey", trailerKey);
+                trailerIntent.putExtra(TRAILER, trailerKey);
                 startActivity(trailerIntent);
             }
         });

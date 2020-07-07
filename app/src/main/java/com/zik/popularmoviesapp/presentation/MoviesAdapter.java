@@ -16,7 +16,11 @@ import com.zik.popularmoviesapp.R;
 import com.zik.popularmoviesapp.model.PopularMovie;
 
 import static com.zik.popularmoviesapp.constants.Constants.POSTER_URL;
-
+/**
+ * Uses PagedListAdapter to load content into adapter
+ * <p>
+ * Created by Zik Asghar 06/2020
+ */
 public class MoviesAdapter extends PagedListAdapter<PopularMovie,
         MoviesAdapter.MovieViewHolder> {
     private static DiffUtil.ItemCallback<PopularMovie> DIFF_CALLBACK =
