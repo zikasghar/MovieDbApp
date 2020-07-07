@@ -9,5 +9,6 @@
     <string name="watch_trailer">Watch Trailer</string>
     <string name="play_trailer">Play Trailer</string>
     <string name="movie_poster">Movie Poster</string>
+    <string name="player_error">error</string>
 
 </resources>

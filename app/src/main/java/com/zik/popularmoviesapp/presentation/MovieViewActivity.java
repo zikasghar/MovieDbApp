@@ -3,6 +3,7 @@ package com.zik.popularmoviesapp.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,20 @@ public class MovieViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_view);
         Intent intent = getIntent();
         loadMovie((PopularMovie) intent.getParcelableExtra(Constants.MOVIE));
+        setListeners();
+    }
+
+    private void setListeners() {
+        ImageButton trailerBtn = findViewById(R.id.watch_trailer_btn);
+        final String trailerKey = getIntent().getStringExtra("trailer");
+        trailerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent trailerIntent = new Intent(getApplicationContext(), MoviePlayer.class);
+                trailerIntent.putExtra("trailerKey", trailerKey);
+                startActivity(trailerIntent);
+            }
+        });
     }
 
     /**

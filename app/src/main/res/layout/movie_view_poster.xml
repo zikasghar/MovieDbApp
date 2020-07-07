@@ -14,14 +14,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/movie_poster"
-        app:layout_constraintBottom_toTopOf="@id/watch_trailer_iv"
+        app:layout_constraintBottom_toTopOf="@id/watch_trailer_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/db_logo_foreground" />
 
-    <ImageView
-        android:id="@+id/watch_trailer_iv"
+    <ImageButton
+        android:id="@+id/watch_trailer_btn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="16dp"
@@ -40,6 +40,6 @@
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/watch_trailer_iv"
-        app:layout_constraintTop_toTopOf="@id/watch_trailer_iv" />
+        app:layout_constraintStart_toEndOf="@id/watch_trailer_btn"
+        app:layout_constraintTop_toTopOf="@id/watch_trailer_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

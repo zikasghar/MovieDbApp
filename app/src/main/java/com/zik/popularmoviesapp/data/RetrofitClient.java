@@ -25,8 +25,4 @@ public class RetrofitClient {
         return retrofit.create(DBApi.class);
     }
 
-    public YoutubeApi getYoutubeAPI() {
-        return retrofit.create(YoutubeApi.class);
-    }
-
 }
