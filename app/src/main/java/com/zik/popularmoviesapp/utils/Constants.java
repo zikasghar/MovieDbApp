@@ -1,4 +1,4 @@
-package com.zik.popularmoviesapp.constants;
+package com.zik.popularmoviesapp.utils;
 
 import com.zik.popularmoviesapp.BuildConfig;
 
@@ -20,6 +20,7 @@ public class Constants {
     public static final String POSTER_URL = "https://image.tmdb.org/t/p/w185";
     public static final String QUERY_BY_SEARCH_STRING = "search/movie?api_key=";
     public static final String QUERY_FOR_TRAILERS = "movie/{movie_id}/videos?api_key=";
+    public static final String QUERY_FOR_REVIEWS = "movie/{movie_id}/reviews?api_key=";
     public static final String QUERY_BY_POPULAR = "movie/popular?api_key=";
     public static final String QUERY_BY_RATED = "movie/top_rated?api_key=";
     public static final String THE_MOVIE_DATABASE_API_KEY = BuildConfig.THE_MOVIE_DATABASE_API_KEY;

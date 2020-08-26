@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
-import com.zik.popularmoviesapp.model.PopularMovie;
-import com.zik.popularmoviesapp.model.TMDBMovieResponse;
-import com.zik.popularmoviesapp.model.TMDBTrailerResponse;
-import com.zik.popularmoviesapp.model.Trailer;
+import com.zik.popularmoviesapp.domain.model.Movie;
+import com.zik.popularmoviesapp.domain.model.TMDBMovieResponse;
+import com.zik.popularmoviesapp.domain.model.TMDBTrailerResponse;
+import com.zik.popularmoviesapp.domain.model.Trailer;
 
 import java.util.List;
 
@@ -17,16 +17,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.zik.popularmoviesapp.constants.Constants.RequestType;
+import static com.zik.popularmoviesapp.utils.Constants.RequestType;
 
 /**
  * uses Retrofit to get list of movies and details
- * uses Gson to convert to "PopularMovie" object
+ * uses Gson to convert to "Movie" object
  * <p>
  * Created by Zik Asghar 06/2020
  */
 
-public class MovieDataSource extends PageKeyedDataSource<Integer, PopularMovie> {
+public class MovieDataSource extends PageKeyedDataSource<Integer, Movie> {
     public static final int PAGE_SIZE = 20;
     public static final int FIRST_PAGE = 1;
     private RequestType requestType;
@@ -41,7 +41,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, PopularMovie> 
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params,
-                            @NonNull final LoadInitialCallback<Integer, PopularMovie> callback) {
+                            @NonNull final LoadInitialCallback<Integer, Movie> callback) {
         getCall(FIRST_PAGE, searchString)
                 .enqueue(new Callback<TMDBMovieResponse>() {
                     @Override
@@ -61,7 +61,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, PopularMovie> 
 
     @Override
     public void loadBefore(@NonNull final LoadParams<Integer> params,
-                           @NonNull final LoadCallback<Integer, PopularMovie> callback) {
+                           @NonNull final LoadCallback<Integer, Movie> callback) {
         getCall(params.key, searchString).
                 enqueue(new Callback<TMDBMovieResponse>() {
                     @Override
@@ -82,7 +82,7 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, PopularMovie> 
 
     @Override
     public void loadAfter(@NonNull final LoadParams<Integer> params,
-                          @NonNull final LoadCallback<Integer, PopularMovie> callback) {
+                          @NonNull final LoadCallback<Integer, Movie> callback) {
         getCall(params.key, searchString)
                 .enqueue(new Callback<TMDBMovieResponse>() {
                     @Override

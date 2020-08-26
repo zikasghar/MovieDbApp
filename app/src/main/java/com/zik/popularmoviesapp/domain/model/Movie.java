@@ -1,4 +1,4 @@
-package com.zik.popularmoviesapp.model;
+package com.zik.popularmoviesapp.domain.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Zik Asghar 06/2020
  */
 
-public class PopularMovie implements Parcelable {
+public class Movie implements Parcelable {
     private String id;
     private String title;
     private String overview;
@@ -24,13 +24,25 @@ public class PopularMovie implements Parcelable {
     private float popularity;
 
 
-    public PopularMovie(String id,
-                        String title,
-                        String overview,
-                        String release,
-                        String posterPath,
-                        float voteAverage,
-                        float popularity) {
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    public Movie(String id,
+                 String title,
+                 String overview,
+                 String release,
+                 String posterPath,
+                 float voteAverage,
+                 float popularity) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -40,7 +52,7 @@ public class PopularMovie implements Parcelable {
         this.popularity = popularity;
     }
 
-    protected PopularMovie(Parcel in) {
+    protected Movie(Parcel in) {
         id = in.readString();
         title = in.readString();
         overview = in.readString();
@@ -49,18 +61,6 @@ public class PopularMovie implements Parcelable {
         voteAverage = in.readFloat();
         popularity = in.readFloat();
     }
-
-    public static final Creator<PopularMovie> CREATOR = new Creator<PopularMovie>() {
-        @Override
-        public PopularMovie createFromParcel(Parcel in) {
-            return new PopularMovie(in);
-        }
-
-        @Override
-        public PopularMovie[] newArray(int size) {
-            return new PopularMovie[size];
-        }
-    };
 
     public String getId() {
         return id;

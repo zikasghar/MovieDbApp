@@ -3,9 +3,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/movie_details_constraint_view"
-    android:layout_margin="16dp"
+    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/release_label_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/released"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/release_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorYellow"
+        app:layout_constraintBottom_toBottomOf="@id/vote_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/release_label_tv" />
+
+    <TextView
+        android:id="@+id/reviews_label_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reviews"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/vote_layout"
@@ -15,8 +44,7 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/overview_tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/release_tv"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/reviews_label_tv">
 
         <TextView
             android:id="@+id/rating"
@@ -62,28 +90,14 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/release_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="@string/released"
-        android:textColor="@color/colorYellow"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/vote_layout"
-        app:layout_constraintEnd_toStartOf="@+id/vote_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/overview_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:theme="@style/ToolbarTheme"
-        android:text=""
+        android:layout_height="0dp"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:theme="@style/ToolbarTheme"
+        app:layout_constraintBottom_toBottomOf="@id/movie_details_constraint_view"
+        app:layout_constraintEnd_toEndOf="@id/movie_details_constraint_view"
+        app:layout_constraintStart_toStartOf="@id/movie_details_constraint_view"
         app:layout_constraintTop_toBottomOf="@id/vote_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

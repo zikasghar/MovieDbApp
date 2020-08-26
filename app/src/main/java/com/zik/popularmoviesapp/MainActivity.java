@@ -7,7 +7,7 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.zik.popularmoviesapp.presentation.MoviesMainActivity;
+import com.zik.popularmoviesapp.presentation.ui.MoviesMainActivity;
 
 /**
  * Created by Zik Asghar 06/2020

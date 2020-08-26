@@ -1,4 +1,4 @@
-package com.zik.popularmoviesapp.presentation;
+package com.zik.popularmoviesapp.presentation.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,14 +12,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.zik.popularmoviesapp.R;
-import com.zik.popularmoviesapp.constants.Constants;
-import com.zik.popularmoviesapp.model.PopularMovie;
+import com.zik.popularmoviesapp.domain.model.Movie;
+import com.zik.popularmoviesapp.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zik.popularmoviesapp.constants.Constants.POSTER_URL;
-import static com.zik.popularmoviesapp.constants.Constants.TRAILER;
+import static com.zik.popularmoviesapp.utils.Constants.POSTER_URL;
+import static com.zik.popularmoviesapp.utils.Constants.TRAILER;
 
 /**
  * Loads view of one movie, showing the poster, title, rating, year released and an overview
@@ -33,9 +33,9 @@ public class MovieViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_view);
         Intent intent = getIntent();
-        PopularMovie popularMovie = intent.getParcelableExtra(Constants.MOVIE);
+        Movie movie = intent.getParcelableExtra(Constants.MOVIE);
         setListeners();
-        loadMovie(popularMovie);
+        loadMovie(movie);
     }
 
     private void setListeners() {
@@ -49,6 +49,12 @@ public class MovieViewActivity extends AppCompatActivity {
                 startActivity(trailerIntent);
             }
         });
+        findViewById(R.id.vote_layout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     /**
@@ -57,7 +63,7 @@ public class MovieViewActivity extends AppCompatActivity {
      * @param movie the movie that was selected by user
      */
 
-    private void loadMovie(PopularMovie movie) {
+    private void loadMovie(Movie movie) {
         setToolbar(movie);
         ImageView movieView = findViewById(R.id.poster_iv);
         try {
@@ -78,7 +84,7 @@ public class MovieViewActivity extends AppCompatActivity {
      * @param movie
      */
 
-    private void setToolbar(PopularMovie movie) {
+    private void setToolbar(Movie movie) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(movie.getTitle());
         toolbar.setNavigationIcon(R.drawable.ic_round_close);
@@ -95,7 +101,7 @@ public class MovieViewActivity extends AppCompatActivity {
      *
      * @param movie
      */
-    private void setVoteStars(PopularMovie movie) {
+    private void setVoteStars(Movie movie) {
         List<ImageView> starsArray = new ArrayList<>();
         TextView vote = findViewById(R.id.rating);
         float stars = movie.getVoteAverage() / 2;

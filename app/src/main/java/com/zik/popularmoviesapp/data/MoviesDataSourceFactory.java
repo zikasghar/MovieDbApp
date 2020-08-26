@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
 
-import com.zik.popularmoviesapp.constants.Constants.RequestType;
-import com.zik.popularmoviesapp.model.PopularMovie;
+import com.zik.popularmoviesapp.domain.model.Movie;
+import com.zik.popularmoviesapp.utils.Constants.RequestType;
 
 public class MoviesDataSourceFactory extends DataSource.Factory {
-    private MutableLiveData<PageKeyedDataSource<Integer, PopularMovie>> movieLiveDataSource;
+    private MutableLiveData<PageKeyedDataSource<Integer, Movie>> movieLiveDataSource;
     private RequestType requestType;
     private String searchString;
 
@@ -19,13 +19,13 @@ public class MoviesDataSourceFactory extends DataSource.Factory {
         this.searchString = searchString;
     }
 
-    public DataSource<Integer, PopularMovie> create() {
+    public DataSource<Integer, Movie> create() {
         MovieDataSource movieDataSource = new MovieDataSource(requestType, searchString);
         movieLiveDataSource.postValue(movieDataSource);
         return movieDataSource;
     }
 
-    public MutableLiveData<PageKeyedDataSource<Integer, PopularMovie>> getLiveDataSource() {
+    public MutableLiveData<PageKeyedDataSource<Integer, Movie>> getLiveDataSource() {
         return movieLiveDataSource;
     }
 }

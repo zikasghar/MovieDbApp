@@ -3,7 +3,7 @@ package com.zik.popularmoviesapp.data;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.zik.popularmoviesapp.constants.Constants.BASE_URL;
+import static com.zik.popularmoviesapp.utils.Constants.BASE_URL;
 
 public class RetrofitClient {
     private static RetrofitClient retrofitClient;

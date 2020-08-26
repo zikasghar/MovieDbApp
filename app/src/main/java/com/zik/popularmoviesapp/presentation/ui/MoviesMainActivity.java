@@ -1,4 +1,4 @@
-package com.zik.popularmoviesapp.presentation;
+package com.zik.popularmoviesapp.presentation.ui;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -18,17 +18,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zik.popularmoviesapp.R;
-import com.zik.popularmoviesapp.constants.Constants;
-import com.zik.popularmoviesapp.data.HelperMethods;
 import com.zik.popularmoviesapp.databinding.ActivityMainViewBinding;
-import com.zik.popularmoviesapp.model.PopularMovie;
-import com.zik.popularmoviesapp.model.Trailer;
-import com.zik.popularmoviesapp.viewModel.MoviesMainViewModel;
+import com.zik.popularmoviesapp.domain.model.Movie;
+import com.zik.popularmoviesapp.domain.model.Trailer;
+import com.zik.popularmoviesapp.presentation.viewModel.MoviesMainViewModel;
+import com.zik.popularmoviesapp.utils.Constants;
+import com.zik.popularmoviesapp.utils.HelperMethods;
 
 import java.util.List;
 
-import static com.zik.popularmoviesapp.constants.Constants.BLANK;
-import static com.zik.popularmoviesapp.constants.Constants.TRAILER;
+import static com.zik.popularmoviesapp.utils.Constants.BLANK;
+import static com.zik.popularmoviesapp.utils.Constants.TRAILER;
 
 /**
  * Created by Zik Asghar 06/2020
@@ -67,10 +67,10 @@ public class MoviesMainActivity extends AppCompatActivity
      * (adapter.setAdapterList is called to update adapter once the list is returned from API call
      */
     private void setObservers() {
-        viewModel.moviePagedList.observe(this, new Observer<PagedList<PopularMovie>>() {
+        viewModel.moviePagedList.observe(this, new Observer<PagedList<Movie>>() {
             @Override
-            public void onChanged(PagedList<PopularMovie> popularMovies) {
-                adapter.submitList(popularMovies);
+            public void onChanged(PagedList<Movie> movies) {
+                adapter.submitList(movies);
             }
         });
         binding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
@@ -113,7 +113,7 @@ public class MoviesMainActivity extends AppCompatActivity
      */
 
     @Override
-    public void onClick(final PopularMovie m) {
+    public void onClick(final Movie m) {
         final Intent intent = new Intent(getApplicationContext(), MovieViewActivity.class);
         binding.pbLoadingIndicator.setVisibility(View.VISIBLE);
         viewModel.getTrailerList(m.getId());
@@ -134,10 +134,10 @@ public class MoviesMainActivity extends AppCompatActivity
     @Override
     public boolean onQueryTextSubmit(String query) {
         viewModel.getViewBySearch(query);
-        viewModel.moviePagedList.observe(this, new Observer<PagedList<PopularMovie>>() {
+        viewModel.moviePagedList.observe(this, new Observer<PagedList<Movie>>() {
             @Override
-            public void onChanged(PagedList<PopularMovie> popularMovies) {
-                adapter.submitList(popularMovies);
+            public void onChanged(PagedList<Movie> movies) {
+                adapter.submitList(movies);
             }
         });
         return false;

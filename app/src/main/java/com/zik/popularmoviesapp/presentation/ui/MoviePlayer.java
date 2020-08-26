@@ -1,8 +1,10 @@
-package com.zik.popularmoviesapp.presentation;
+package com.zik.popularmoviesapp.presentation.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
@@ -10,9 +12,9 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.zik.popularmoviesapp.R;
 
-import static com.zik.popularmoviesapp.constants.Constants.MOVIE_ID_STRING;
-import static com.zik.popularmoviesapp.constants.Constants.TRAILER;
-import static com.zik.popularmoviesapp.constants.Constants.YOUTUBE_API_KEY;
+import static com.zik.popularmoviesapp.utils.Constants.MOVIE_ID_STRING;
+import static com.zik.popularmoviesapp.utils.Constants.TRAILER;
+import static com.zik.popularmoviesapp.utils.Constants.YOUTUBE_API_KEY;
 
 public class MoviePlayer extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
@@ -29,6 +31,18 @@ public class MoviePlayer extends YouTubeBaseActivity implements YouTubePlayer.On
         trailerId = intent.getStringExtra(TRAILER);
         youTubePlayerView = findViewById(R.id.youtube_view);
         youTubePlayerView.initialize(YOUTUBE_API_KEY, this);
+        setToolbar();
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_round_close);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -47,7 +61,6 @@ public class MoviePlayer extends YouTubeBaseActivity implements YouTubePlayer.On
             youTubeInitializationResult.getErrorDialog(this, 1).show();
         } else {
             String error = R.string.player_error + youTubeInitializationResult.toString();
-            Log.d("YOUTUBE ERROR!!!!", error);
         }
     }
 

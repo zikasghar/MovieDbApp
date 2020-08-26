@@ -16,20 +16,25 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".presentation.MoviesMainActivity"
+            android:name=".presentation.ui.MovieReviewsActivity"
+            android:label="@string/title_activity_movie_reviews"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".presentation.ui.MoviesMainActivity"
             android:label="@string/title_activity_movies_main"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".presentation.MovieViewActivity"
+            android:name=".presentation.ui.MovieViewActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
-        <activity android:name=".presentation.MoviePlayer" />
+        <activity android:name=".presentation.ui.MoviePlayer" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,4 +1,4 @@
-package com.zik.popularmoviesapp.model;
+package com.zik.popularmoviesapp.domain.model;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class TMDBMovieResponse {
     public int page;
     public int total_results;
     public int total_pages;
-    public List<PopularMovie> results;
+    public List<Movie> results;
 }
 
 

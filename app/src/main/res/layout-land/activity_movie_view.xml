@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/activity_movie_view_landscape"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorAccent"
@@ -31,16 +32,18 @@
             android:id="@+id/scrollView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="12dp"
+            android:background="@color/colorYellow"
             android:overScrollMode="always"
             android:scrollbarThumbVertical="@color/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/activity_movie_view_landscape"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/poster_trailer_layout"
+            app:layout_constraintStart_toEndOf="@+id/poster_layout"
             app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <include
                 android:id="@+id/include_movie_view_details_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 layout="@layout/movie_view_details" />
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

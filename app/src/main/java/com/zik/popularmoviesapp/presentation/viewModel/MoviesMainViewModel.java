@@ -1,4 +1,4 @@
-package com.zik.popularmoviesapp.viewModel;
+package com.zik.popularmoviesapp.presentation.viewModel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,24 +8,24 @@ import androidx.paging.PagedList;
 
 import com.zik.popularmoviesapp.data.MovieDataSource;
 import com.zik.popularmoviesapp.data.MoviesDataSourceFactory;
-import com.zik.popularmoviesapp.model.PopularMovie;
-import com.zik.popularmoviesapp.model.Trailer;
+import com.zik.popularmoviesapp.domain.model.Movie;
+import com.zik.popularmoviesapp.domain.model.Trailer;
 
 import java.util.List;
 
-import static com.zik.popularmoviesapp.constants.Constants.RequestType.POPULAR;
-import static com.zik.popularmoviesapp.constants.Constants.RequestType.RATING;
-import static com.zik.popularmoviesapp.constants.Constants.RequestType.SEARCH_BY;
-import static com.zik.popularmoviesapp.constants.Constants.RequestType.TRAILER_DETAILS;
+import static com.zik.popularmoviesapp.utils.Constants.RequestType.POPULAR;
+import static com.zik.popularmoviesapp.utils.Constants.RequestType.RATING;
+import static com.zik.popularmoviesapp.utils.Constants.RequestType.SEARCH_BY;
+import static com.zik.popularmoviesapp.utils.Constants.RequestType.TRAILER_DETAILS;
 
 /**
  * Created by Zik Asghar 06/2020
  */
 
 public class MoviesMainViewModel extends ViewModel {
-    public LiveData<PagedList<PopularMovie>> moviePagedList;
+    public LiveData<PagedList<Movie>> moviePagedList;
     public LiveData<List<Trailer>> trailerList;
-    LiveData<PageKeyedDataSource<Integer, PopularMovie>> liveDataSource;
+    LiveData<PageKeyedDataSource<Integer, Movie>> liveDataSource;
 
     public MoviesMainViewModel() {
         getViewByPopular();
@@ -61,6 +61,5 @@ public class MoviesMainViewModel extends ViewModel {
         MovieDataSource movieDataSource = new MovieDataSource(TRAILER_DETAILS, movieId);
         movieDataSource.getTrailersResponse();
         trailerList = movieDataSource.getTrailers();
-
     }
 }
